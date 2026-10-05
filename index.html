@@ -43,7 +43,7 @@
     .rail { min-height:700px; padding:15px 12px; display:flex; flex-direction:column; }
     .eyebrow { display:flex; align-items:center; justify-content:space-between; margin:0 0 12px; color:var(--muted); font:800 9px monospace; letter-spacing:0; }
     .eyebrow span:last-child { color:#778075; font-weight:500; }
-    .nav-tabs { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:15px; }
+    .nav-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-bottom:15px; }
     .tab { min-height:36px; border:1px solid var(--line); background:#131815; color:var(--muted); font:800 9px monospace; cursor:pointer; }
     .tab.active { border-color:var(--gold); background:#302719; color:var(--gold); }
     .machine-list { display:grid; gap:7px; }
@@ -127,6 +127,31 @@
     .roulette-bet-row { display:flex;align-items:center;justify-content:center;gap:7px;margin:13px 0; }
     .roulette-bet-row .bet-input { width:100px; }
     .roulette-note { margin:0;color:#838c7f;text-align:center;font:9px/1.4 monospace; }
+    .bj-table { width:min(500px,100%); min-height:350px; margin:8px auto 12px; padding:22px 15px; display:flex;flex-direction:column;justify-content:space-between;border:7px solid #8b6539;border-radius:46% / 19%;background:radial-gradient(ellipse,#237350 0,#14583e 52%,#0c3c2c 100%);box-shadow:inset 0 0 0 3px #30251b,0 8px 24px #0007; }
+    .bj-hand { display:flex;flex-direction:column;align-items:center;gap:8px; }
+    .bj-label { color:#d1d7c8;font:800 9px monospace; }
+    .bj-label b { margin-left:7px;color:var(--gold);font-size:13px; }
+    .bj-cards { min-height:105px;display:flex;align-items:center;justify-content:center;gap:7px; }
+    .bj-card { width:62px;height:88px;position:relative;display:grid;place-items:center;border:1px solid #d7d0bf;border-radius:5px;background:linear-gradient(145deg,#fffdf4,#e6e0cf);color:#24241f;font:700 29px Georgia,serif;box-shadow:0 4px 9px #0005;animation:cardDeal .23s ease-out both; }
+    .bj-card.red { color:#bd3f3a; }
+    .bj-card small { position:absolute;left:5px;top:4px;font:700 10px/1 Georgia,serif; }
+    .bj-card small.bottom { left:auto;top:auto;right:5px;bottom:4px;transform:rotate(180deg); }
+    .bj-card.hidden-card { background:repeating-linear-gradient(45deg,#1d4e3b 0 6px,#27694d 6px 12px);border:2px solid #d5b66c; }
+    .bj-message { min-height:38px;display:grid;place-items:center;color:#f4d58c;text-align:center;font:11px monospace; }
+    .bj-actions { display:flex;justify-content:center;gap:7px;margin-bottom:12px; }
+    .bj-actions .btn { min-width:82px; }
+    @keyframes cardDeal { from{opacity:0;transform:translateY(-15px) rotate(-4deg)} to{opacity:1;transform:translateY(0) rotate(0)} }
+    .bank-choices { display:grid;gap:5px;margin-bottom:10px; }
+    .bank-choice { width:100%;padding:7px 8px;display:flex;justify-content:space-between;gap:8px;border:1px solid var(--line);background:#151a16;color:var(--muted);text-align:left;font:8px monospace;cursor:pointer; }
+    .bank-choice.selected { border-color:var(--gold);background:#302719;color:var(--gold); }
+    .bank-choice strong { color:var(--cream);font-size:9px; }
+    .bank-choice span:last-child { text-align:right; }
+    .larp-card { padding:10px;border:1px solid #4a3e5d;background:linear-gradient(130deg,#282132,#211e25); }
+    .larp-head { display:flex;justify-content:space-between;align-items:center;gap:6px; }
+    .larp-head strong { color:#dac5ff;font:700 12px Georgia,serif; }
+    .larp-state { color:var(--muted);font:8px monospace; }
+    .larp-card p { margin:6px 0 0;color:#a7a0b3;font:8px/1.4 monospace; }
+    .larp-timer { margin-top:7px;color:#e0caff;font:700 14px monospace; }
 
     .club { min-height:700px; padding:15px 13px; display:flex;flex-direction:column; }
     .club-section { padding:0 0 12px; border-bottom:1px solid var(--line); margin-bottom:12px; }
@@ -157,7 +182,7 @@
     @media(max-width:760px) {
       .page{padding:12px 9px 22px}.topbar{gap:10px;margin-bottom:10px}.brand-name{font-size:17px}.brand-mark{width:31px;height:31px}.wallet{font-size:8px}.level-chip{padding:6px;font-size:8px}
       .columns{display:flex;flex-direction:column;gap:9px}.main-panel{order:1;min-height:0}.rail{order:2;min-height:0}.club{order:3;display:flex;min-height:0}.club-section{border-right:0;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:12px;margin-bottom:11px}.club-section:last-of-type{border-bottom:0;margin-bottom:0}
-      .machine-list{grid-template-columns:repeat(2,minmax(0,1fr))}.rail-bottom{margin-top:12px}.machine-art{margin-top:12px;padding:18px 16px 14px}.reel{height:95px;font-size:53px}.marquee{font-size:14px}.paytable-grid{grid-template-columns:repeat(2,1fr)}
+      .machine-list{grid-template-columns:repeat(2,minmax(0,1fr))}.rail-bottom{margin-top:12px}.machine-art{margin-top:12px;padding:18px 16px 14px}.reel{height:95px;font-size:53px}.marquee{font-size:14px}.paytable-grid{grid-template-columns:repeat(2,1fr)}.bj-table{min-height:315px}.bj-card{width:53px;height:78px;font-size:25px}.bj-actions .btn{min-width:66px;padding:0 7px}
       .roulette{padding:12px}.wheel-wrap{width:220px;height:220px}.wheel{width:202px;height:202px}.roulette-options{grid-template-columns:repeat(3,1fr)}.roulette-pick{font-size:8px}
     }
     @media(max-width:390px) {
@@ -232,6 +257,7 @@
         <section class="club-section"><h3 class="club-title"><span>PERMANENT UPGRADES</span><span>OWNED <b id="upgradeCount">0</b>/3</span></h3><div id="upgrades"></div></section>
         <section class="club-section"><h3 class="club-title"><span>THE MOTOR POOL</span><span>COLLECT</span></h3><div id="assets"></div></section>
         <section class="club-section"><h3 class="club-title"><span>HOUSE CREDIT</span><span id="bankLabel">PICK A BANK</span></h3><div id="bankChoices" class="bank-choices"></div><div class="loan-balance"><span>OUTSTANDING</span><strong id="debt">$0</strong></div><div class="loan-actions"><button id="borrowButton" class="btn">BORROW</button><button id="repayButton" class="btn">REPAY $100</button></div><p id="loanNote" class="loan-note">Compare lenders: lower rates have smaller credit lines.</p></section>
+        <section class="club-section"><h3 class="club-title"><span>LIMITED-TIME EDGE</span><span>RANDOM EVENT</span></h3><div id="larpCard" class="larp-card"><div class="larp-head"><strong>LARP maxxing</strong><span id="larpState" class="larp-state">DORMANT</span></div><p>Temporary luck surge. Better hit chance across games; wins pay 30% less.</p><div id="larpTimer" class="larp-timer">--:--</div></div></section>
         <div class="rail-bottom"><div class="divider"></div><div class="stat-line"><span>LUCK BONUS</span><b id="luckStat">+0%</b></div><div class="stat-line" style="margin-top:8px"><span>GARAGE VALUE</span><b id="garageValue">$0</b></div></div>
       </aside>
     </div>
@@ -244,11 +270,17 @@
       "use strict";
       const $ = (id) => document.getElementById(id);
       const machines = [
-        { id:"lantern", name:"Lucky Lantern", icon:"🏮", rep:0, subtitle:"THE ORIGINAL · FRUIT & CLASSIC SYMBOLS", betMin:5, betMax:500, jackpot:500, weights:[26,22,18,14,10,7,2.8,.18], symbols:["🍒","🍋","🍊","🍇","🍉","⭐","🔔","💎"], payouts:[1.3,1.7,2.2,3.2,5,9,22,500] },
-        { id:"neon", name:"Neon Nights", icon:"🌙", rep:15, subtitle:"AFTER HOURS · NEON & LUCKY SEVENS", betMin:10, betMax:900, jackpot:800, weights:[24,21,18,15,11,7,3.5,.12], symbols:["🌙","💜","⚡","🎲","🃏","7️⃣","👑","🌟"], payouts:[1.5,1.8,2.4,3.5,5,12,30,800] },
-        { id:"royal", name:"Royal Flush", icon:"♛", rep:50, subtitle:"HIGH ROLLER · GEMS & ROYALTY", betMin:25, betMax:2000, jackpot:1500, weights:[27,22,18,14,10,6,2.8,.08], symbols:["♦️","♣️","♥️","♠️","🪙","💍","👑","💠"], payouts:[1.5,2,2.7,4,7,15,45,1500] },
-        { id:"cosmos", name:"Cosmic 7", icon:"🚀", rep:120, subtitle:"OUTER LIMITS · GALACTIC JACKPOT", betMin:50, betMax:5000, jackpot:3000, weights:[25,22,18,14,10,7,3.8,.035], symbols:["🪐","🌑","☄️","🛸","🌌","👾","🚀","🌠"], payouts:[1.5,2.2,3,5,8,18,60,3000] }
+        { id:"lantern", name:"Lucky Lantern", icon:"🏮", rep:0, subtitle:"THE ORIGINAL · FRUIT & CLASSIC SYMBOLS", betMin:5, betMax:500, jackpot:500, weights:[30,24,18,13,8,4,1.5,.18], symbols:["🍒","🍋","🍊","🍇","🍉","⭐","🔔","💎"], payouts:[1.15,1.3,1.55,1.9,2.8,7,25,500] },
+        { id:"neon", name:"Neon Nights", icon:"🌙", rep:15, subtitle:"AFTER HOURS · NEON & LUCKY SEVENS", betMin:10, betMax:900, jackpot:800, weights:[28,23,18,13,9,5,1.6,.12], symbols:["🌙","💜","⚡","🎲","🃏","7️⃣","👑","🌟"], payouts:[1.2,1.4,1.7,2.1,3,8,32,800] },
+        { id:"royal", name:"Royal Flush", icon:"♛", rep:50, subtitle:"HIGH ROLLER · GEMS & ROYALTY", betMin:25, betMax:2000, jackpot:1500, weights:[29,23,18,13,8,4.5,1.2,.08], symbols:["♦️","♣️","♥️","♠️","🪙","💍","👑","💠"], payouts:[1.2,1.5,1.8,2.4,3.5,10,50,1500] },
+        { id:"cosmos", name:"Cosmic 7", icon:"🚀", rep:120, subtitle:"OUTER LIMITS · GALACTIC JACKPOT", betMin:50, betMax:5000, jackpot:3000, weights:[27,23,18,13,9,5,1.3,.035], symbols:["🪐","🌑","☄️","🛸","🌌","👾","🚀","🌠"], payouts:[1.2,1.5,2,2.8,4,12,70,3000] }
       ];
+      const banks=[
+        {id:"community",name:"Community Bank",rate:4,limit:300,advance:100,perk:"4% fee · $300 limit"},
+        {id:"lantern",name:"Lantern Credit",rate:9,limit:900,advance:250,perk:"9% fee · $900 limit"},
+        {id:"highroller",name:"High Roller Finance",rate:18,limit:1800,advance:500,perk:"18% fee · $1,800 limit"}
+      ];
+      const wheelOrder=[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
       const upgrades = [
         { id:"clover", name:"Lucky Clover", icon:"🍀", description:"Better odds on premium symbols. Stacks up to 3 levels.", cost:450, max:3, effects:[3,6,10] },
         { id:"polish", name:"Polished Reels", icon:"✨", description:"Boost every slot payout by 8% per level.", cost:700, max:3, effects:[8,16,24] },
@@ -267,7 +299,7 @@
         {id:"number",label:"STRAIGHT · PICK #",mult:35}
       ];
       const redNumbers=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
-      const freshSave={cash:700,rep:0,debt:0,unlockedMachines:["lantern"],machine:"lantern",upgrades:{},ownedAssets:[],selectedPick:"red",lastSpin:null};
+      const freshSave={cash:700,rep:0,debt:0,bank:"community",unlockedMachines:["lantern"],machine:"lantern",upgrades:{},ownedAssets:[],selectedPick:"red",lastSpin:null,larpUntil:0,bjBet:25};
       let save;
       try { save={...freshSave,...JSON.parse(localStorage.getItem("lucky-lantern-save")||"{}")} } catch { save={...freshSave}; }
       save.upgrades={...freshSave.upgrades,...(save.upgrades||{})};
@@ -275,6 +307,8 @@
       save.ownedAssets=Array.isArray(save.ownedAssets)?save.ownedAssets:[];
       if(!machines.some(m=>m.id===save.machine)||!save.unlockedMachines.includes(save.machine))save.machine="lantern";
       let activeView="slots",spinning=false,autoRemaining=0,selectedNumber=17,toastTimer=0;
+      const bj={active:false,player:[],dealer:[],hidden:false,wager:0,canDouble:false,message:"Place your bet and deal in.",deck:[]};
+      let nextLarpCheck=Date.now()+12000+Math.random()*18000;
 
       function persist(){localStorage.setItem("lucky-lantern-save",JSON.stringify(save));}
       function cash(){return Math.max(0,Math.floor(Number(save.cash)||0));}
@@ -282,24 +316,43 @@
       function upgradeLevel(id){return Math.max(0,Number(save.upgrades[id])||0);}
       function luckBonus(){return upgradeLevel("clover")?upgrades[0].effects[upgradeLevel("clover")-1]:0;}
       function payoutBonus(){return upgradeLevel("polish")*8;}
-      function creditFee(){return Math.max(4,12-upgradeLevel("credit")*4);}
-      function maxDebt(){return 1000;}
+      function bank(){return banks.find(b=>b.id===save.bank)||banks[0];}
+      function creditFee(){return Math.max(3,bank().rate-upgradeLevel("credit")*2);}
+      function maxDebt(){return bank().limit;}
       function fmt(value){return "$"+Math.floor(value).toLocaleString("en-US");}
       function notify(message){const el=$("toast");el.textContent=message;el.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("visible"),2600);}
       function addRep(amount=1){save.rep+=amount;}
       function currentBet(input,m){const n=Math.floor(Number(input.value)||0);return Math.max(m.betMin,Math.min(m.betMax,Math.floor(n/5)*5||m.betMin));}
-      function effectiveWeights(m){const w=[...m.weights];const luck=luckBonus()/100;if(luck<=0)return w;for(let i=4;i<w.length;i++)w[i]*=1+luck*(i-2)*.72;return w;}
-      function weightedSymbol(m){const weights=effectiveWeights(m);const total=weights.reduce((a,b)=>a+b,0);let n=Math.random()*total;for(let i=0;i<weights.length;i++){n-=weights[i];if(n<=0)return i;}return 0;}
+      function larpActive(){return Number(save.larpUntil)>Date.now();}
+      function larpMultiplier(){return larpActive()?0.7:1;}
+      function maybeActivateLarp(){
+        if(larpActive())return false;
+        if(Math.random()<.055){save.larpUntil=Date.now()+120000;notify("LARP maxxing activated! Two minutes of boosted luck.");return true;}
+        return false;
+      }
+      function effectiveWeights(m){const w=[...m.weights];const luck=luckBonus()/100+(larpActive()?0.32:0);if(luck<=0)return w;for(let i=4;i<w.length;i++)w[i]*=1+luck*(i-2)*.72;return w;}
+      function weightedSymbol(m,excludeJackpot=false){const weights=effectiveWeights(m);if(excludeJackpot)weights.pop();const total=weights.reduce((a,b)=>a+b,0);let n=Math.random()*total;for(let i=0;i<weights.length;i++){n-=weights[i];if(n<=0)return i;}return 0;}
+      function drawCard(){if(!bj.deck.length){for(const suit of ["♠","♥","♦","♣"])for(const rank of ["A","2","3","4","5","6","7","8","9","10","J","Q","K"])bj.deck.push({rank,suit});}return bj.deck.pop();}
+      function cardValue(card){if(card.rank==="A")return 11;if(["K","Q","J"].includes(card.rank))return 10;return Number(card.rank);}
+      function handValue(cards){let total=cards.reduce((sum,c)=>sum+cardValue(c),0);let aces=cards.filter(c=>c.rank==="A").length;while(total>21&&aces){total-=10;aces--;}return total;}
+      function larpTick(){
+        const now=Date.now();
+        if(!larpActive()&&now>=nextLarpCheck){nextLarpCheck=now+15000+Math.random()*45000;if(Math.random()<.38){save.larpUntil=now+120000;notify("LARP maxxing just kicked in! Boosted luck for 2 minutes.");persist();}}
+        const left=Math.max(0,Number(save.larpUntil)-now);
+        $("larpState").textContent=left?"ACTIVE · ×1.4 HIT CHANCE":"DORMANT";
+        $("larpTimer").textContent=left?`${String(Math.floor(left/60000)).padStart(2,"0")}:${String(Math.floor(left/1000)%60).padStart(2,"0")}`:"RANDOM ACTIVATION";
+        $("larpCard").classList.toggle("active",Boolean(left));
+      }
       function oddsLabel(weight){return `${(weight*100).toFixed(weight<1?2:0)}% weight`;}
       function renderMachines(){
         const list=$("machineList");list.replaceChildren();
         machines.forEach((m,index)=>{
           const owned=save.unlockedMachines.includes(m.id),button=document.createElement("button");button.type="button";
-          button.className=`machine-choice${save.machine===m.id&&activeView==="slots"?" active":""}`;button.disabled=!owned;
+          button.className=`machine-choice${save.machine===m.id&&activeView==="slots"?" active":""}`;
           const icon=document.createElement("span");icon.className="machine-icon";icon.textContent=m.icon;
           const name=document.createElement("strong");name.textContent=m.name;
-          const meta=document.createElement("small");meta.textContent=owned?`BET ${fmt(m.betMin)}–${fmt(m.betMax)}`:`${m.rep} REP TO UNLOCK`;
-          button.append(icon,name,meta);button.addEventListener("click",()=>{if(owned){save.machine=m.id;persist();renderAll();}});list.append(button);
+          const meta=document.createElement("small");meta.textContent=owned?`BET ${fmt(m.betMin)}–${fmt(m.betMax)}`:`LOCKED · ${m.rep} REP`;
+          button.append(icon,name,meta);button.addEventListener("click",()=>{save.machine=m.id;persist();renderAll();});list.append(button);
         });
         $("machineCount").textContent=`${String(save.unlockedMachines.length).padStart(2,"0")} / ${String(machines.length).padStart(2,"0")}`;
       }
@@ -346,14 +399,27 @@
         $("cash").textContent=fmt(cash());$("levelChip").textContent=`REP ${save.rep}`;
         $("debt").textContent=fmt(save.debt);$("luckStat").textContent=`+${luckBonus()}%`;
         $("garageValue").textContent=fmt(assets.filter(a=>save.ownedAssets.includes(a.id)).reduce((sum,a)=>sum+a.cost,0));
-        $("borrowButton").disabled=save.debt>=maxDebt()||spinning;
-        $("borrowButton").textContent=save.debt>=maxDebt()?"CREDIT MAXED":"BORROW $250";
+        renderBanks();
+        const available=Math.max(0,maxDebt()-save.debt);
+        $("borrowButton").disabled=available<=0||spinning;
+        $("borrowButton").textContent=available<=0?"CREDIT MAXED":`BORROW ${fmt(Math.min(bank().advance,available))}`;
         $("repayButton").disabled=save.debt<=0||cash()<=0||spinning;
-        $("loanNote").textContent=`Borrow up to ${fmt(maxDebt())}. Each advance adds a ${creditFee()}% fee. Repay any time.`;
+        $("bankLabel").textContent=bank().name.toUpperCase();
+        $("loanNote").textContent=`${bank().perk}. New advances add ${creditFee()}% fee. Repay any time.`;
+        larpTick();
         renderProgress();renderUpgrades();renderAssets();
       }
+      function renderBanks(){
+        const wrap=$("bankChoices");wrap.replaceChildren();
+        banks.forEach(b=>{
+          const button=document.createElement("button");button.type="button";button.className=`bank-choice${save.bank===b.id?" selected":""}`;
+          const name=document.createElement("strong");name.textContent=b.name;
+          const perk=document.createElement("span");perk.textContent=`${b.rate}% · ${fmt(b.limit)} max`;
+          button.append(name,perk);button.disabled=spinning;button.addEventListener("click",()=>{save.bank=b.id;persist();renderAll();});wrap.append(button);
+        });
+      }
       function renderPaytable(){
-        const m=machine();$("paytableTitle").textContent=`PAYTABLE · MATCH 3 · JACKPOT ${m.jackpot}×`;
+        const m=machine();$("paytableTitle").textContent=`MATCH 3 PAYTABLE · JACKPOT ${m.jackpot}× · 1 IN 20,000`;
         const grid=$("paytableGrid");grid.replaceChildren();
         m.symbols.forEach((symbol,index)=>{
           const row=document.createElement("div");row.className="pay-item";
@@ -364,8 +430,8 @@
       }
       function renderSlot(){
         const m=machine(),unlocked=save.unlockedMachines.includes(m.id);
-        $("gameTitle").textContent=m.name;$("gameSubtitle").textContent=m.subtitle;
-        $("machineStatus").textContent=unlocked?`MIN ${fmt(m.betMin)} · MAX ${fmt(m.betMax)}`:`REQUIRES ${m.rep} REP`;
+        if(activeView==="slots"){$("gameTitle").textContent=m.name;$("gameSubtitle").textContent=m.subtitle;
+        $("machineStatus").textContent=unlocked?`MIN ${fmt(m.betMin)} · MAX ${fmt(m.betMax)}`:`REQUIRES ${m.rep} REP`;}
         $("machineNameplate").textContent=`3 REELS · MATCH 3 · JACKPOT ${m.jackpot}×`;
         $("machineArt").querySelector(".marquee").textContent=`✦   ${m.name.toUpperCase()}   ✦`;
         const bet=$("slotBet");bet.min=m.betMin;bet.max=m.betMax;bet.step=5;
@@ -377,10 +443,27 @@
         $("spinButton").textContent=`SPIN · ${fmt(currentBet(bet,m))}`;
         $("spinButton").disabled=spinning||!unlocked||cash()<m.betMin;
         $("allIn").disabled=spinning||!unlocked||cash()<m.betMin;
-        $("autoButton").disabled=spinning||!unlocked||cash()<m.betMin;
+        $("autoButton").disabled=(spinning&&autoRemaining===0)||!unlocked||cash()<m.betMin;
+        $("autoButton").textContent=autoRemaining>0?"STOP AUTO":"AUTO ×5";
         renderPaytable();renderMachines();
       }
+      function renderWheel(){
+        const svg=$("wheelPockets");
+        if(svg.childElementCount)return;
+        const ns="http://www.w3.org/2000/svg",cx=115,cy=115,outer=108,inner=44,sector=360/wheelOrder.length;
+        wheelOrder.forEach((number,index)=>{
+          const start=(-90+index*sector)*Math.PI/180,end=(-90+(index+1)*sector)*Math.PI/180;
+          const x1=cx+outer*Math.cos(start),y1=cy+outer*Math.sin(start),x2=cx+outer*Math.cos(end),y2=cy+outer*Math.sin(end);
+          const ix2=cx+inner*Math.cos(end),iy2=cy+inner*Math.sin(end),ix1=cx+inner*Math.cos(start),iy1=cy+inner*Math.sin(start);
+          const path=document.createElementNS(ns,"path");path.setAttribute("d",`M ${x1} ${y1} A ${outer} ${outer} 0 0 1 ${x2} ${y2} L ${ix2} ${iy2} A ${inner} ${inner} 0 0 0 ${ix1} ${iy1} Z`);
+          path.setAttribute("fill",number===0?"#138253":redNumbers.has(number)?"#b83b36":"#222a25");path.setAttribute("stroke","#d0b16c");path.setAttribute("stroke-width",".8");svg.append(path);
+          const angle=(-90+(index+.5)*sector)*Math.PI/180,r=82;
+          const text=document.createElementNS(ns,"text");text.setAttribute("x",cx+r*Math.cos(angle));text.setAttribute("y",cy+r*Math.sin(angle));text.setAttribute("fill","#fff2d1");text.setAttribute("font-size","8");text.setAttribute("font-family","monospace");text.setAttribute("font-weight","700");text.setAttribute("text-anchor","middle");text.setAttribute("dominant-baseline","middle");text.textContent=number;svg.append(text);
+        });
+        const hub=document.createElementNS(ns,"circle");hub.setAttribute("cx",cx);hub.setAttribute("cy",cy);hub.setAttribute("r",inner-1);hub.setAttribute("fill","#191d18");hub.setAttribute("stroke","#dbb664");hub.setAttribute("stroke-width","2");svg.append(hub);
+      }
       function renderRoulette(){
+        renderWheel();
         const wrap=$("rouletteOptions");wrap.replaceChildren();
         wheelPicks.forEach(p=>{
           const b=document.createElement("button");b.className=`roulette-pick ${p.color||""}${save.selectedPick===p.id?" selected":""}`;b.textContent=p.id==="number"?`# ${selectedNumber}`:p.label;
@@ -395,14 +478,34 @@
         $("rouletteSpin").disabled=spinning||cash()<5;
         $("rouletteAllIn").disabled=spinning||cash()<5;
       }
-      function renderAll(){renderClub();renderSlot();renderRoulette();persist();}
+      function renderBlackjack(){
+        const renderCards=(target,cards,hideHole=false)=>{
+          target.replaceChildren();cards.forEach((card,index)=>{
+            const item=document.createElement("div");item.className=`bj-card${card.suit==="♥"||card.suit==="♦"?" red":""}${hideHole&&index===1?" hidden-card":""}`;
+            if(!(hideHole&&index===1)){item.textContent=card.suit;const top=document.createElement("small");top.textContent=card.rank+card.suit;const bottom=document.createElement("small");bottom.className="bottom";bottom.textContent=card.rank+card.suit;item.append(top,bottom);}
+            target.append(item);
+          });
+        };
+        renderCards($("playerCards"),bj.player);renderCards($("dealerCards"),bj.dealer,bj.active&&bj.hidden);
+        $("playerTotal").textContent=bj.player.length?String(handValue(bj.player)):"—";
+        $("dealerTotal").textContent=bj.dealer.length?(bj.active&&bj.hidden?String(cardValue(bj.dealer[0]))+" + ?":String(handValue(bj.dealer))):"—";
+        $("bjMessage").textContent=bj.message;
+        $("bjBet").value=bj.wager||save.bjBet||25;
+        $("bjDeal").disabled=spinning||bj.active||cash()<10;
+        $("bjHit").disabled=spinning||!bj.active;
+        $("bjStand").disabled=spinning||!bj.active;
+        $("bjDouble").disabled=spinning||!bj.active||!bj.canDouble||cash()<bj.wager;
+        $("bjAllIn").disabled=spinning||bj.active||cash()<10;
+      }
+      function renderAll(){renderClub();renderSlot();renderRoulette();renderBlackjack();persist();}
 
       function setView(view){
         if(spinning)return;activeView=view;
-        $("slotView").hidden=view!=="slots";$("rouletteView").hidden=view!=="roulette";
-        $("slotsTab").classList.toggle("active",view==="slots");$("rouletteTab").classList.toggle("active",view==="roulette");
+        $("slotView").hidden=view!=="slots";$("rouletteView").hidden=view!=="roulette";$("blackjackView").hidden=view!=="blackjack";
+        $("slotsTab").classList.toggle("active",view==="slots");$("rouletteTab").classList.toggle("active",view==="roulette");$("blackjackTab").classList.toggle("active",view==="blackjack");
         $("machineHeading").hidden=view!=="slots";$("machineList").hidden=view!=="slots";
         if(view==="roulette"){$("gameTitle").textContent="Roulette";$("gameSubtitle").textContent="EUROPEAN WHEEL · SINGLE ZERO · CLUB CASH";$("machineStatus").textContent="HOUSE EDGE 2.70%";}
+        else if(view==="blackjack"){$("gameTitle").textContent="Blackjack";$("gameSubtitle").textContent="21 TABLE · DEALER STANDS ON SOFT 17";$("machineStatus").textContent="3:2 NATURAL PAYOUT";renderBlackjack();}
         else renderSlot();
       }
 
@@ -411,19 +514,24 @@
         let bet=forceAllIn?Math.min(cash(),m.betMax):currentBet($("slotBet"),m);
         bet=Math.max(m.betMin,Math.min(m.betMax,bet));
         if(cash()<bet){notify("Not enough club cash for that wager.");return;}
-        save.cash-=bet;addRep(1);spinning=true;persist();renderAll();
+        save.cash-=bet;addRep(1);maybeActivateLarp();spinning=true;persist();renderAll();
         $("slotBet").value=bet;$("spinButton").disabled=true;$("autoButton").disabled=true;$("allIn").disabled=true;
         $("machineStatus").textContent="REELS IN MOTION…";$("slotResult").textContent="Good luck. The reels are turning.";$("slotResult").className="result-line";
         const reels=[0,1,2].map(i=>$("reel"+i));reels.forEach((r,i)=>{r.classList.add("spinning");let count=0;const timer=setInterval(()=>{r.textContent=m.symbols[Math.floor(Math.random()*m.symbols.length)];count++;if(count>14+i*7)clearInterval(timer);},55);});
-        const final=[weightedSymbol(m),weightedSymbol(m),weightedSymbol(m)];
+        let final;
+        const jackpotRoll=Math.random()<1/20000;
+        const baseHitChance=.30+luckBonus()*.003+(larpActive() ? 0.15 : 0);
+        const regularWin=!jackpotRoll&&Math.random()<Math.min(.62,baseHitChance);
+        if(jackpotRoll)final=[m.symbols.length-1,m.symbols.length-1,m.symbols.length-1];
+        else if(regularWin){const match=weightedSymbol(m,true);final=[match,match,match];}
+        else final=[weightedSymbol(m),weightedSymbol(m),weightedSymbol(m)];
         const win=final[0]===final[1]&&final[1]===final[2];
-        let multiplier=win?m.payouts[final[0]]:nearMiss(final,m)?0:0;
-        if(final.every(i=>i===m.symbols.length-1)&&!win)multiplier=0;
+        const multiplier=win?m.payouts[final[0]]:0;
         const bonus=upgradeLevel("polish")*0.08;
-        const payout=win?Math.floor(bet*multiplier*(1+bonus)):0;
+        const payout=win?Math.floor(bet*multiplier*(1+bonus)*larpMultiplier()):0;
         setTimeout(()=>{
           reels.forEach((r,i)=>{r.classList.remove("spinning");r.textContent=m.symbols[final[i]];});
-          if(payout>0){save.cash+=payout;$("machineArt").classList.remove("win-flash");void $("machineArt").offsetWidth;$("machineArt").classList.add("win-flash");$("slotResult").textContent=multiplier>=m.jackpot?`JACKPOT! ${fmt(payout)} returned!`:`Winner! ${m.symbols[final[0]]} pays ${fmt(payout)}.`;$("slotResult").className="result-line win";}
+          if(payout>0){save.cash+=payout;$("machineArt").classList.remove("win-flash");void $("machineArt").offsetWidth;$("machineArt").classList.add("win-flash");$("slotResult").textContent=multiplier>=m.jackpot?`JACKPOT! ${fmt(payout)} returned!`:`Winner! ${m.symbols[final[0]]} pays ${fmt(payout)}${larpActive()?" · LARP 30% cut":""}.`;$("slotResult").className="result-line win";}
           else {$("machineArt").classList.remove("lose-shake");void $("machineArt").offsetWidth;$("machineArt").classList.add("lose-shake");$("slotResult").textContent=nearMiss(final,m)?"So close. One symbol away.":"No match this time. Try another line.";$("slotResult").className="result-line lose";}
           $("machineStatus").textContent=payout>0?`PAID ${fmt(payout)}`:`WAGER ${fmt(bet)} · NO WIN`;
           save.lastSpin={machine:m.id,text:$("slotResult").textContent,win:payout>0};spinning=false;persist();renderAll();
@@ -435,33 +543,78 @@
       function spinRoulette(allIn=false){
         if(spinning)return;const bet=allIn?cash():Math.max(5,Math.floor(Number($("rouletteBet").value)||5));
         if(bet<5||cash()<bet){notify("Not enough club cash for that wager.");return;}
-        save.cash-=bet;addRep(1);spinning=true;persist();renderAll();
+        save.cash-=bet;addRep(1);maybeActivateLarp();spinning=true;persist();renderAll();
         $("rouletteSpin").disabled=true;$("wheelResult").textContent="The ball is in motion…";
-        const result=Math.floor(Math.random()*37);const wheel=$("wheel");
-        const turns=1440+Math.random()*720+(360-result*360/37);
+        const pick=wheelPicks.find(p=>p.id===save.selectedPick);
+        let result=Math.floor(Math.random()*37);
+        if(larpActive()&&!winsRoulette(result,pick)&&Math.random()<.28){let tries=0;while(!winsRoulette(result,pick)&&tries++<500)result=Math.floor(Math.random()*37);}
+        const wheel=$("wheel"),ballNode=$("rouletteBall"),index=wheelOrder.indexOf(result);
+        const sector=360/wheelOrder.length,offset=(360-((index+.5)*sector)%360)%360;
+        const turns=1800+Math.random()*360+offset;
         wheel.style.transform=`rotate(${turns}deg)`;
+        ballNode.classList.add("rolling");ballNode.style.transform=`rotate(${1800+Math.random()*360}deg)`;
         setTimeout(()=>{
-          const pick=wheelPicks.find(p=>p.id===save.selectedPick);let won=false;
-          if(pick.id==="red")won=result!==0&&redNumbers.has(result);
-          else if(pick.id==="black")won=result!==0&&!redNumbers.has(result);
-          else if(pick.id==="even")won=result!==0&&result%2===0;
-          else if(pick.id==="odd")won=result%2===1;
-          else if(pick.id==="low")won=result>=1&&result<=18;
-          else if(pick.id==="high")won=result>=19&&result<=36;
-          else if(pick.id==="dozen1")won=result>=1&&result<=12;
-          else if(pick.id==="dozen2")won=result>=13&&result<=24;
-          else if(pick.id==="dozen3")won=result>=25&&result<=36;
-          else if(pick.id==="number")won=result===selectedNumber;
-          const payout=won?bet*(pick.mult+1):0;if(payout)save.cash+=payout;
+          ballNode.classList.remove("rolling");let won=winsRoulette(result,pick);
+          const payout=won?Math.floor(bet*(pick.mult+1)*larpMultiplier()):0;if(payout)save.cash+=payout;
           const color=result===0?"GREEN":redNumbers.has(result)?"RED":"BLACK";
-          $("wheelNumber").textContent=String(result);$("wheelResult").textContent=won?`${result} ${color} · YOU WIN ${fmt(payout)}`:`${result} ${color} · ${pick.label} MISSED`;
+          $("wheelNumber").textContent=String(result);$("wheelResult").textContent=won?`${result} ${color} · YOU WIN ${fmt(payout)}${larpActive()?" · LARP 30% CUT":""}`:`${result} ${color} · ${pick.label} MISSED`;
           $("wheelResult").style.color=won?"var(--gold)":"var(--muted)";
           spinning=false;persist();renderAll();
         },3200);
       }
+      function winsRoulette(result,pick){
+        if(pick.id==="red")return result!==0&&redNumbers.has(result);
+        if(pick.id==="black")return result!==0&&!redNumbers.has(result);
+        if(pick.id==="even")return result!==0&&result%2===0;
+        if(pick.id==="odd")return result%2===1;
+        if(pick.id==="low")return result>=1&&result<=18;
+        if(pick.id==="high")return result>=19&&result<=36;
+        if(pick.id==="dozen1")return result>=1&&result<=12;
+        if(pick.id==="dozen2")return result>=13&&result<=24;
+        if(pick.id==="dozen3")return result>=25&&result<=36;
+        return pick.id==="number"&&result===selectedNumber;
+      }
+
+      function blackjackStart(allIn=false){
+        if(spinning||bj.active||cash()<10)return;
+        const wager=allIn?cash():Math.max(10,Math.floor(Number($("bjBet").value)||10));
+        if(wager>cash()){notify("Not enough club cash for that bet.");return;}
+        save.cash-=wager;save.bjBet=wager;addRep(1);maybeActivateLarp();
+        bj.deck=[];for(const suit of ["♠","♥","♦","♣"])for(const rank of ["A","2","3","4","5","6","7","8","9","10","J","Q","K"])bj.deck.push({rank,suit});
+        for(let i=bj.deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bj.deck[i],bj.deck[j]]=[bj.deck[j],bj.deck[i]];}
+        bj.wager=wager;bj.player=[drawCard(),drawCard()];bj.dealer=[drawCard(),drawCard()];bj.active=true;bj.hidden=true;bj.canDouble=true;bj.message="Choose hit, stand, or double.";
+        if(larpActive()&&handValue(bj.player)!==21&&Math.random()<.08){const candidates=bj.deck.filter(c=>handValue([bj.player[0],c])===21);if(candidates.length)bj.player[1]=candidates[0];}
+        persist();renderAll();
+        if(handValue(bj.player)===21||handValue(bj.dealer)===21)blackjackSettle();
+      }
+      function blackjackHit(){
+        if(!bj.active||spinning)return;bj.player.push(drawCard());bj.canDouble=false;
+        if(handValue(bj.player)>21&&larpActive()&&Math.random()<.3){bj.player.pop();const safe=bj.deck.filter(c=>handValue([...bj.player,c])<=21);if(safe.length)bj.player.push(safe[Math.floor(Math.random()*safe.length)]);}
+        if(handValue(bj.player)>=21)blackjackSettle();else{bj.message="Another card? Hit or stand.";renderAll();}
+      }
+      function blackjackStand(){if(!bj.active||spinning)return;bj.hidden=false;while(handValue(bj.dealer)<17)bj.dealer.push(drawCard());blackjackSettle();}
+      function blackjackDouble(){
+        if(!bj.active||!bj.canDouble||cash()<bj.wager||spinning)return;
+        save.cash-=bj.wager;bj.wager*=2;save.bjBet=bj.wager;bj.player.push(drawCard());bj.canDouble=false;
+        if(handValue(bj.player)>21&&larpActive()&&Math.random()<.3){bj.player.pop();const safe=bj.deck.filter(c=>handValue([...bj.player,c])<=21);if(safe.length)bj.player.push(safe[Math.floor(Math.random()*safe.length)]);}
+        bj.hidden=false;while(handValue(bj.dealer)<17)bj.dealer.push(drawCard());blackjackSettle();
+      }
+      function blackjackSettle(){
+        const player=handValue(bj.player),dealer=handValue(bj.dealer);bj.hidden=false;bj.active=false;bj.canDouble=false;
+        const playerNatural=bj.player.length===2&&player===21,dealerNatural=bj.dealer.length===2&&dealer===21;
+        let returned=0;
+        if(player>21){bj.message=`Bust at ${player}. Hand lost.`;}
+        else if(playerNatural&&dealerNatural){returned=bj.wager;bj.message="Both blackjack. Push.";}
+        else if(playerNatural){returned=Math.floor(bj.wager*2.5);bj.message=`Blackjack! ${fmt(returned)} returned.`;}
+        else if(dealer>21||player>dealer){returned=bj.wager*2;bj.message=dealer>21?`Dealer busts. You win ${fmt(returned)}.`:`${player} beats ${dealer}. You win ${fmt(returned)}.`;}
+        else if(player===dealer){returned=bj.wager;bj.message=`Push at ${player}. Your stake is returned.`;}
+        else bj.message=`Dealer ${dealer}, you ${player}. Hand lost.`;
+        if(returned){save.cash+=Math.floor(returned*larpMultiplier());if(larpActive())bj.message+=" LARP payout reduced 30%.";}
+        persist();renderAll();
+      }
 
       function borrow(){
-        const amount=Math.min(250,maxDebt()-save.debt);if(amount<=0){notify("Your credit line is maxed out.");return;}
+        const amount=Math.min(bank().advance,maxDebt()-save.debt);if(amount<=0){notify("Your selected credit line is maxed out. Choose another bank.");return;}
         const fee=Math.ceil(amount*creditFee()/100);save.cash+=amount;save.debt+=amount+fee;persist();renderAll();notify(`Borrowed ${fmt(amount)}. ${fmt(fee)} fee added to your balance.`);
       }
       function repay(){
@@ -470,9 +623,9 @@
 
       function bind(){
         $("slotsTab").addEventListener("click",()=>setView("slots"));$("rouletteTab").addEventListener("click",()=>setView("roulette"));
+        $("blackjackTab").addEventListener("click",()=>setView("blackjack"));
         $("spinButton").addEventListener("click",()=>spinSlots());$("allIn").addEventListener("click",()=>spinSlots(true));
-        $("autoButton").addEventListener("click",()=>{if(spinning)return;autoRemaining=5;$("autoButton").textContent="STOP AUTO";spinSlots(false,true);});
-        $("autoButton").addEventListener("contextmenu",e=>{e.preventDefault();autoRemaining=0;$("autoButton").textContent="AUTO ×5";});
+        $("autoButton").addEventListener("click",()=>{if(autoRemaining>0){autoRemaining=0;$("autoButton").textContent="AUTO ×5";notify("Auto spin will stop when these reels finish.");return;}if(spinning)return;autoRemaining=5;spinSlots(false,true);});
         $("slotBet").addEventListener("input",()=>{$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),machine()))}`;});
         $("betDown").addEventListener("click",()=>{const m=machine();$("slotBet").value=Math.max(m.betMin,currentBet($("slotBet"),m)-5);$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),m))}`;});
         $("betUp").addEventListener("click",()=>{const m=machine();$("slotBet").value=Math.min(m.betMax,currentBet($("slotBet"),m)+5);$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),m))}`;});
@@ -483,7 +636,15 @@
         $("rouletteBetDown").addEventListener("click",()=>$("rouletteBet").value=Math.max(5,(Math.floor(Number($("rouletteBet").value)||5)-5)));
         $("rouletteBetUp").addEventListener("click",()=>$("rouletteBet").value=Math.floor(Number($("rouletteBet").value)||5)+5);
       }
-      bind();renderAll();
+      $("bjDeal").addEventListener("click",()=>blackjackStart());
+      $("bjAllIn").addEventListener("click",()=>blackjackStart(true));
+      $("bjHit").addEventListener("click",blackjackHit);
+      $("bjStand").addEventListener("click",blackjackStand);
+      $("bjDouble").addEventListener("click",blackjackDouble);
+      $("bjBet").addEventListener("input",()=>{save.bjBet=Math.floor(Number($("bjBet").value)||10);});
+      $("bjBetDown").addEventListener("click",()=>{$("bjBet").value=Math.max(10,Math.floor(Number($("bjBet").value)||10)-5);save.bjBet=Number($("bjBet").value);});
+      $("bjBetUp").addEventListener("click",()=>{$("bjBet").value=Math.floor(Number($("bjBet").value)||10)+5;save.bjBet=Number($("bjBet").value);});
+      bind();renderAll();setInterval(larpTick,1000);
     })();
   </script>
 </body>
