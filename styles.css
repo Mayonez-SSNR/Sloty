@@ -140,3 +140,5 @@ main{background:linear-gradient(160deg,#ffffff10,#0000),#1d0818dd!important;bord
 .trk{border:0!important;background:repeating-linear-gradient(90deg,#d62839 0 22px,#fff 22px 44px) top/100% 8px no-repeat,repeating-linear-gradient(90deg,#fff 0 22px,#d62839 22px 44px) bottom/100% 8px no-repeat,#15151b!important;padding:8px 0;border-radius:10px;box-shadow:0 12px 40px #000a}
 .ln{height:50px!important;background:linear-gradient(90deg,transparent 42%,#22c55e22 42% 66%,transparent 66%),repeating-linear-gradient(90deg,#2b2b34 0 80px,#25252d 80px 160px)!important;border-bottom:2px dashed #ffffff44!important}
 .ln:before{content:'';position:absolute;left:38px;top:0;bottom:0;width:3px;background:#fffa}.hs{font-size:34px!important;filter:drop-shadow(0 4px 3px #000)}.hs.go{filter:drop-shadow(-16px 0 5px #ff8a1ecc) drop-shadow(0 4px 3px #000)}
+
+body.dr main{animation:sway 4s ease-in-out infinite;filter:blur(var(--bl,0px))}@keyframes sway{50%{transform:rotate(calc(var(--dr)*.1deg)) translateX(calc(var(--dr)*1px))}}
