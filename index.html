@@ -110,8 +110,13 @@
     .roulette[hidden] { display:none; }
     .wheel-wrap { width:250px; height:250px; display:grid; place-items:center; position:relative; margin:1px auto 10px; }
     .wheel-pointer { position:absolute; z-index:2; top:-2px; left:calc(50% - 11px); width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-top:23px solid var(--gold); filter:drop-shadow(0 2px 3px #000); }
-    .wheel { width:230px;height:230px; position:relative; display:grid;place-items:center; border:7px solid #c99f55; border-radius:50%; background:conic-gradient(#146447 0deg 9.73deg,#a33532 9.73deg 19.46deg,#202722 19.46deg 29.19deg,#a33532 29.19deg 38.92deg,#202722 38.92deg 48.65deg,#a33532 48.65deg 58.38deg,#202722 58.38deg 68.11deg,#a33532 68.11deg 77.84deg,#202722 77.84deg 87.57deg,#a33532 87.57deg 97.3deg,#202722 97.3deg 107.03deg,#a33532 107.03deg 116.76deg,#202722 116.76deg 126.49deg,#a33532 126.49deg 136.22deg,#202722 136.22deg 145.95deg,#a33532 145.95deg 155.68deg,#202722 155.68deg 165.41deg,#a33532 165.41deg 175.14deg,#202722 175.14deg 184.87deg,#a33532 184.87deg 194.6deg,#202722 194.6deg 204.33deg,#a33532 204.33deg 214.06deg,#202722 214.06deg 223.79deg,#a33532 223.79deg 233.52deg,#202722 233.52deg 243.25deg,#a33532 243.25deg 252.98deg,#202722 252.98deg 262.71deg,#a33532 262.71deg 272.44deg,#202722 272.44deg 282.17deg,#a33532 282.17deg 291.9deg,#202722 291.9deg 301.63deg,#a33532 301.63deg 311.36deg,#202722 311.36deg 321.09deg,#a33532 321.09deg 330.82deg,#202722 330.82deg 340.55deg,#a33532 340.55deg 350.28deg,#202722 350.28deg 360deg); box-shadow:0 0 0 4px #282419,0 10px 25px #0008; transition:transform 3.1s cubic-bezier(.11,.72,.17,1); }
+    .wheel { width:230px;height:230px; position:relative; display:grid;place-items:center; border:7px solid #c99f55; border-radius:50%; background:#174b38; box-shadow:0 0 0 4px #282419,0 10px 25px #0008; transition:transform 3.1s cubic-bezier(.11,.72,.17,1); }
+    .wheel svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
     .wheel-center { width:74px;height:74px;display:grid;place-items:center;border:2px solid #dbb664;border-radius:50%;background:#191d18;color:var(--gold);font:700 21px Georgia,serif;box-shadow:0 0 12px #0008; }
+    .wheel-center { position:relative; z-index:1; }
+    .roulette-ball { position:absolute; z-index:3; left:calc(50% - 6px); top:12px; width:12px; height:12px; border:2px solid #fff; border-radius:50%; background:#f5f0df; box-shadow:0 0 7px #fff,0 2px 4px #000; transform-origin:6px 112px; transition:transform 3.1s cubic-bezier(.11,.72,.17,1); }
+    .roulette-ball.rolling { animation:ballRattle .22s ease-in-out infinite alternate; }
+    @keyframes ballRattle { from{margin-left:-2px} to{margin-left:2px} }
     .wheel-center small { display:block; margin-top:-19px; color:var(--muted); font:8px monospace; }
     .wheel-result { min-height:29px; margin:4px 0 13px; color:var(--gold); font:700 15px Georgia,serif; }
     .roulette-options { width:100%; max-width:490px; display:grid;grid-template-columns:repeat(3,1fr);gap:6px; }
@@ -173,7 +178,7 @@
     <div class="columns">
       <aside class="rail">
         <h2 class="eyebrow"><span>01 / FLOOR</span><span>CLUB ACCESS</span></h2>
-        <div class="nav-tabs"><button id="slotsTab" class="tab active">SLOTS</button><button id="rouletteTab" class="tab">ROULETTE</button></div>
+        <div class="nav-tabs"><button id="slotsTab" class="tab active">SLOTS</button><button id="rouletteTab" class="tab">ROULETTE</button><button id="blackjackTab" class="tab">BLACKJACK</button></div>
         <h2 id="machineHeading" class="eyebrow"><span>THE MACHINES</span><span id="machineCount">01 / 04</span></h2>
         <div id="machineList" class="machine-list"></div>
         <div class="rail-bottom">
@@ -202,12 +207,23 @@
         </div>
 
         <div id="rouletteView" class="roulette" hidden>
-          <div class="wheel-wrap"><div class="wheel-pointer"></div><div id="wheel" class="wheel"><div class="wheel-center"><span id="wheelNumber">LL</span></div></div></div>
+          <div class="wheel-wrap"><div class="wheel-pointer"></div><div id="wheel" class="wheel"><svg id="wheelPockets" viewBox="0 0 230 230" aria-label="European roulette wheel"></svg><div class="wheel-center"><span id="wheelNumber">LL</span></div></div><div id="rouletteBall" class="roulette-ball"></div></div>
           <div id="wheelResult" class="wheel-result">Choose a wager below.</div>
           <div id="rouletteOptions" class="roulette-options"></div>
           <div class="roulette-bet-row"><span class="bet-label">BET</span><button id="rouletteBetDown" class="btn small">−</button><input id="rouletteBet" class="bet-input" type="number" min="5" step="5" value="25" aria-label="Roulette bet"><button id="rouletteBetUp" class="btn small">+</button><button id="rouletteAllIn" class="btn red small">ALL IN</button></div>
           <button id="rouletteSpin" class="btn gold" style="min-width:180px">SPIN THE WHEEL</button>
           <p class="roulette-note">European wheel · 0–36 · winnings return stake plus payout</p>
+        </div>
+
+        <div id="blackjackView" class="roulette" hidden>
+          <div class="bj-table">
+            <div class="bj-hand dealer-hand"><span class="bj-label">DEALER <b id="dealerTotal">—</b></span><div id="dealerCards" class="bj-cards"></div></div>
+            <div id="bjMessage" class="bj-message">Place your bet and deal in.</div>
+            <div class="bj-hand player-hand"><span class="bj-label">YOUR HAND <b id="playerTotal">—</b></span><div id="playerCards" class="bj-cards"></div></div>
+          </div>
+          <div class="roulette-bet-row"><span class="bet-label">BET</span><button id="bjBetDown" class="btn small">−</button><input id="bjBet" class="bet-input" type="number" min="10" step="5" value="25" aria-label="Blackjack bet"><button id="bjBetUp" class="btn small">+</button><button id="bjAllIn" class="btn red small">ALL IN</button></div>
+          <div class="bj-actions"><button id="bjDeal" class="btn gold">DEAL</button><button id="bjHit" class="btn">HIT</button><button id="bjStand" class="btn">STAND</button><button id="bjDouble" class="btn">DOUBLE</button></div>
+          <p class="roulette-note">Dealer stands on soft 17 · Blackjack pays 3:2 · Virtual club cash only</p>
         </div>
       </section>
 
@@ -215,7 +231,7 @@
         <h2 class="eyebrow"><span>02 / CLUB LIFE</span><span>YOUR PROGRESS</span></h2>
         <section class="club-section"><h3 class="club-title"><span>PERMANENT UPGRADES</span><span>OWNED <b id="upgradeCount">0</b>/3</span></h3><div id="upgrades"></div></section>
         <section class="club-section"><h3 class="club-title"><span>THE MOTOR POOL</span><span>COLLECT</span></h3><div id="assets"></div></section>
-        <section class="club-section"><h3 class="club-title"><span>HOUSE CREDIT</span><span>12% FEE</span></h3><div class="loan-balance"><span>OUTSTANDING</span><strong id="debt">$0</strong></div><div class="loan-actions"><button id="borrowButton" class="btn">BORROW $250</button><button id="repayButton" class="btn">REPAY $100</button></div><p id="loanNote" class="loan-note">Borrow up to $1,000. Each advance adds a 12% fee. Repay any time.</p></section>
+        <section class="club-section"><h3 class="club-title"><span>HOUSE CREDIT</span><span id="bankLabel">PICK A BANK</span></h3><div id="bankChoices" class="bank-choices"></div><div class="loan-balance"><span>OUTSTANDING</span><strong id="debt">$0</strong></div><div class="loan-actions"><button id="borrowButton" class="btn">BORROW</button><button id="repayButton" class="btn">REPAY $100</button></div><p id="loanNote" class="loan-note">Compare lenders: lower rates have smaller credit lines.</p></section>
         <div class="rail-bottom"><div class="divider"></div><div class="stat-line"><span>LUCK BONUS</span><b id="luckStat">+0%</b></div><div class="stat-line" style="margin-top:8px"><span>GARAGE VALUE</span><b id="garageValue">$0</b></div></div>
       </aside>
     </div>
