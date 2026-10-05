@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucky Lantern | Arcade Club</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #111513;
+      --surface: #191f1b;
+      --surface-2: #222a24;
+      --line: #39433b;
+      --cream: #f2ead8;
+      --muted: #a8aa96;
+      --gold: #f2c46d;
+      --gold-deep: #9b6828;
+      --jade: #77c5a0;
+      --coral: #f07862;
+      --cyan: #79c4d0;
+      --violet: #b8a3d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-width: 320px; min-height: 100vh; color: var(--cream);
+      background: radial-gradient(ellipse at 50% -20%, #3a3323 0, transparent 49%), var(--night);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .page { max-width: 1540px; margin: auto; padding: 20px 26px 32px; }
+    .topbar { display:flex; align-items:center; gap:20px; min-height:48px; margin-bottom:16px; }
+    .brand { display:flex; align-items:center; gap:11px; white-space:nowrap; }
+    .brand-mark { width:36px; height:36px; display:grid; place-items:center; border:1px solid #c99e52; border-radius:50%; color:var(--gold); font:700 16px Georgia,serif; box-shadow:0 0 22px #efbe5640; }
+    .brand-name { font:700 20px/1 Georgia,serif; letter-spacing:0; }
+    .brand-name small { display:block; margin-top:5px; color:var(--muted); font:700 8px/1 monospace; }
+    .top-rule { height:1px; flex:1; background:linear-gradient(90deg,var(--line),transparent); }
+    .wallet { display:flex; align-items:center; gap:8px; color:var(--muted); font:9px monospace; white-space:nowrap; }
+    .wallet strong { color:var(--gold); font-size:16px; }
+    .level-chip { padding:7px 9px; border:1px solid #4b4738; background:#24221b; color:var(--gold); font:800 9px monospace; white-space:nowrap; }
+    .columns { display:grid; grid-template-columns:220px minmax(420px,1fr) 278px; gap:13px; align-items:stretch; }
+    .rail,.main-panel,.club { border:1px solid var(--line); background:var(--surface); }
+    .rail { min-height:700px; padding:15px 12px; display:flex; flex-direction:column; }
+    .eyebrow { display:flex; align-items:center; justify-content:space-between; margin:0 0 12px; color:var(--muted); font:800 9px monospace; letter-spacing:0; }
+    .eyebrow span:last-child { color:#778075; font-weight:500; }
+    .nav-tabs { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:15px; }
+    .tab { min-height:36px; border:1px solid var(--line); background:#131815; color:var(--muted); font:800 9px monospace; cursor:pointer; }
+    .tab.active { border-color:var(--gold); background:#302719; color:var(--gold); }
+    .machine-list { display:grid; gap:7px; }
+    .machine-choice { width:100%; position:relative; padding:10px 9px; text-align:left; border:1px solid var(--line); background:#141916; cursor:pointer; }
+    .machine-choice:hover:not(:disabled) { border-color:#b18d51; }
+    .machine-choice.active { border-color:var(--gold); background:#29251c; }
+    .machine-choice:disabled { opacity:.53; cursor:not-allowed; }
+    .machine-choice strong { display:block; font:700 12px Georgia,serif; }
+    .machine-choice small { display:block; margin-top:5px; color:var(--muted); font:9px monospace; }
+    .machine-icon { float:right; font-size:20px; }
+    .rail-bottom { margin-top:auto; }
+    .divider { height:1px; margin:13px 0; background:var(--line); }
+    .progress-head,.stat-line { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font:9px monospace; }
+    .progress-head b { color:var(--cream); font-weight:600; }
+    .progress { height:5px; margin:7px 0 4px; background:#30382f; }
+    .progress i { height:100%; display:block; background:linear-gradient(90deg,var(--gold-deep),var(--gold)); transition:width .3s; }
+    .rep-next { color:#7d8679; font:8px monospace; }
+
+    .main-panel { min-height:700px; overflow:hidden; display:flex; flex-direction:column; }
+    .main-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 17px 12px; border-bottom:1px solid var(--line); }
+    .main-head h1 { margin:0; font:700 20px/1 Georgia,serif; }
+    .main-head p { margin:5px 0 0; color:var(--muted); font:9px monospace; }
+    .machine-status { color:var(--gold); font:800 9px monospace; white-space:nowrap; }
+    .machine-art { position:relative; margin:18px auto 14px; width:min(490px,calc(100% - 34px)); padding:21px 25px 18px; border:2px solid #a87a37; border-radius:8px 8px 16px 16px; background:linear-gradient(145deg,#65502d 0,#382b1d 18%,#271f19 54%,#4c3922 100%); box-shadow:inset 0 0 0 4px #181814,0 13px 30px #0008; }
+    .machine-art::before { content:""; position:absolute; left:12px; right:12px; top:9px; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+    .marquee { margin:-5px auto 14px; text-align:center; color:#ffe2a1; font:700 16px Georgia,serif; text-shadow:0 0 12px #f9bf48; letter-spacing:0; }
+    .reels { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; padding:9px; border:3px solid #d6b46d; border-radius:5px; background:#171713; box-shadow:inset 0 0 14px #000; }
+    .reel { height:116px; display:grid; place-items:center; overflow:hidden; background:linear-gradient(90deg,#bdb5a2,#f7f0df 12%,#e8e0ce 88%,#aaa18d); color:#28241d; border-radius:3px; font-size:62px; text-shadow:0 3px 0 #fff9; user-select:none; }
+    .reel.spinning { animation:reelBlur .14s linear infinite; filter:blur(1px); }
+    @keyframes reelBlur { 0%{transform:translateY(-4px)} 50%{transform:translateY(4px)} 100%{transform:translateY(-4px)} }
+    .payline { position:absolute; left:21px; right:21px; top:calc(50% + 9px); height:2px; background:#f4ca69; opacity:.76; box-shadow:0 0 9px #ffdc70; pointer-events:none; }
+    .machine-nameplate { margin-top:13px; text-align:center; color:#dbbd7b; font:800 8px monospace; letter-spacing:0; }
+    .win-flash { animation:winFlash .65s ease-in-out 3; }
+    .lose-shake { animation:loseShake .45s ease-in-out 2; }
+    @keyframes winFlash { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.85) drop-shadow(0 0 18px #ffdb74)} }
+    @keyframes loseShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+    .result-line { min-height:26px; margin:0 auto 8px; padding:0 14px; text-align:center; color:var(--muted); font:11px monospace; }
+    .result-line.win { color:var(--gold); }
+    .result-line.lose { color:#d18473; }
+    .bet-row { display:flex; justify-content:center; align-items:center; gap:7px; margin:4px 12px 11px; }
+    .bet-label { margin-right:4px; color:var(--muted); font:800 9px monospace; }
+    .bet-input { width:105px; height:38px; border:1px solid #59513d; background:#111511; color:var(--cream); text-align:center; font:700 14px monospace; outline:none; }
+    .bet-input:focus { border-color:var(--gold); }
+    .btn { min-height:37px; padding:0 12px; border:1px solid var(--line); background:var(--surface-2); color:var(--cream); font:800 9px monospace; cursor:pointer; transition:background .15s,border-color .15s,transform .1s; }
+    .btn:hover:not(:disabled) { border-color:var(--gold); }
+    .btn:active:not(:disabled) { transform:translateY(1px); }
+    .btn:disabled { opacity:.42; cursor:not-allowed; }
+    .btn.gold { border-color:var(--gold); background:var(--gold); color:#21190e; }
+    .btn.gold:hover:not(:disabled) { background:#ffdc94; }
+    .btn.red { border-color:#78463e; background:#35211e; color:#ffd1c5; }
+    .btn.small { min-height:31px; padding:0 9px; }
+    .spin-controls { display:flex; justify-content:center; gap:8px; margin-bottom:17px; }
+    .spin-controls .btn { min-width:123px; }
+    .paytable { margin:auto 15px 15px; padding:12px; border-top:1px solid var(--line); background:#151a16; }
+    .paytable h2 { margin:0 0 9px; color:var(--muted); font:800 9px monospace; }
+    .paytable-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+    .pay-item { display:flex; justify-content:space-between; gap:5px; color:#a9b0a1; font:9px monospace; }
+    .pay-item strong { color:var(--cream); }
+    .machine-unlock { margin:0 15px 15px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; gap:10px; border:1px solid #5a4b31; background:#282319; }
+    .machine-unlock[hidden] { display:none; }
+    .machine-unlock span { color:var(--muted); font:9px monospace; }
+
+    .roulette { padding:17px; display:flex; flex:1; flex-direction:column; align-items:center; }
+    .roulette[hidden] { display:none; }
+    .wheel-wrap { width:250px; height:250px; display:grid; place-items:center; position:relative; margin:1px auto 10px; }
+    .wheel-pointer { position:absolute; z-index:2; top:-2px; left:calc(50% - 11px); width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-top:23px solid var(--gold); filter:drop-shadow(0 2px 3px #000); }
+    .wheel { width:230px;height:230px; position:relative; display:grid;place-items:center; border:7px solid #c99f55; border-radius:50%; background:conic-gradient(#146447 0deg 9.73deg,#a33532 9.73deg 19.46deg,#202722 19.46deg 29.19deg,#a33532 29.19deg 38.92deg,#202722 38.92deg 48.65deg,#a33532 48.65deg 58.38deg,#202722 58.38deg 68.11deg,#a33532 68.11deg 77.84deg,#202722 77.84deg 87.57deg,#a33532 87.57deg 97.3deg,#202722 97.3deg 107.03deg,#a33532 107.03deg 116.76deg,#202722 116.76deg 126.49deg,#a33532 126.49deg 136.22deg,#202722 136.22deg 145.95deg,#a33532 145.95deg 155.68deg,#202722 155.68deg 165.41deg,#a33532 165.41deg 175.14deg,#202722 175.14deg 184.87deg,#a33532 184.87deg 194.6deg,#202722 194.6deg 204.33deg,#a33532 204.33deg 214.06deg,#202722 214.06deg 223.79deg,#a33532 223.79deg 233.52deg,#202722 233.52deg 243.25deg,#a33532 243.25deg 252.98deg,#202722 252.98deg 262.71deg,#a33532 262.71deg 272.44deg,#202722 272.44deg 282.17deg,#a33532 282.17deg 291.9deg,#202722 291.9deg 301.63deg,#a33532 301.63deg 311.36deg,#202722 311.36deg 321.09deg,#a33532 321.09deg 330.82deg,#202722 330.82deg 340.55deg,#a33532 340.55deg 350.28deg,#202722 350.28deg 360deg); box-shadow:0 0 0 4px #282419,0 10px 25px #0008; transition:transform 3.1s cubic-bezier(.11,.72,.17,1); }
+    .wheel-center { width:74px;height:74px;display:grid;place-items:center;border:2px solid #dbb664;border-radius:50%;background:#191d18;color:var(--gold);font:700 21px Georgia,serif;box-shadow:0 0 12px #0008; }
+    .wheel-center small { display:block; margin-top:-19px; color:var(--muted); font:8px monospace; }
+    .wheel-result { min-height:29px; margin:4px 0 13px; color:var(--gold); font:700 15px Georgia,serif; }
+    .roulette-options { width:100%; max-width:490px; display:grid;grid-template-columns:repeat(3,1fr);gap:6px; }
+    .roulette-pick { min-height:36px;border:1px solid var(--line);background:#151a16;color:var(--muted);font:800 9px monospace;cursor:pointer; }
+    .roulette-pick.selected { border-color:var(--gold);background:#32291b;color:var(--gold); }
+    .roulette-pick.red { border-left:3px solid #b94540; }
+    .roulette-pick.black { border-left:3px solid #69766a; }
+    .roulette-bet-row { display:flex;align-items:center;justify-content:center;gap:7px;margin:13px 0; }
+    .roulette-bet-row .bet-input { width:100px; }
+    .roulette-note { margin:0;color:#838c7f;text-align:center;font:9px/1.4 monospace; }
+
+    .club { min-height:700px; padding:15px 13px; display:flex;flex-direction:column; }
+    .club-section { padding:0 0 12px; border-bottom:1px solid var(--line); margin-bottom:12px; }
+    .club-section:last-of-type { border-bottom:0; }
+    .club-title { display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;color:var(--muted);font:800 9px monospace; }
+    .club-title span:last-child { color:#778075;font-weight:500; }
+    .upgrade-row,.asset-row { display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid #2d352f; }
+    .upgrade-row:first-of-type,.asset-row:first-of-type { border-top:0; }
+    .upgrade-icon { width:31px;height:31px;flex:0 0 31px;display:grid;place-items:center;border:1px solid #514833;background:#29251c;font-size:16px; }
+    .upgrade-info,.asset-info { min-width:0;flex:1; }
+    .upgrade-info strong,.asset-info strong { display:block;font:700 11px Georgia,serif; }
+    .upgrade-info small,.asset-info small { display:block;margin-top:3px;color:var(--muted);font:8px/1.35 monospace; }
+    .upgrade-row .btn,.asset-row .btn { min-height:29px;padding:0 7px;font-size:8px;white-space:nowrap; }
+    .asset-icon { width:35px;height:28px;display:grid;place-items:center;background:#272b23;border:1px solid #414639;font-size:20px; }
+    .loan-balance { display:flex;justify-content:space-between;align-items:baseline;margin:5px 0 8px;color:var(--muted);font:9px monospace; }
+    .loan-balance strong { color:var(--coral);font-size:13px; }
+    .loan-actions { display:grid;grid-template-columns:1fr 1fr;gap:6px; }
+    .loan-actions .btn { padding:0 6px;font-size:8px; }
+    .loan-note { margin:7px 0 0;color:#7e887f;font:8px/1.4 monospace; }
+    .toast { position:fixed;right:24px;bottom:24px;z-index:10;max-width:min(370px,calc(100vw - 32px));padding:12px 16px;border:1px solid #73603c;background:#26231b;color:var(--cream);box-shadow:0 8px 28px #0008;font:10px/1.4 monospace;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s; }
+    .toast.visible { opacity:1;transform:translateY(0); }
+    .fineprint { margin:12px 0 0;color:#747e73;text-align:center;font:8px monospace; }
+    @media(max-width:1160px) {
+      .page{padding:17px}.columns{grid-template-columns:195px minmax(360px,1fr)}
+      .club{grid-column:1/-1;min-height:auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:start}
+      .club>.eyebrow{grid-column:1/-1;margin-bottom:0}.club-section{border-bottom:0;border-right:1px solid var(--line);padding-right:12px;margin-bottom:0}.club-section:last-of-type{border-right:0}
+    }
+    @media(max-width:760px) {
+      .page{padding:12px 9px 22px}.topbar{gap:10px;margin-bottom:10px}.brand-name{font-size:17px}.brand-mark{width:31px;height:31px}.wallet{font-size:8px}.level-chip{padding:6px;font-size:8px}
+      .columns{display:flex;flex-direction:column;gap:9px}.main-panel{order:1;min-height:0}.rail{order:2;min-height:0}.club{order:3;display:flex;min-height:0}.club-section{border-right:0;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:12px;margin-bottom:11px}.club-section:last-of-type{border-bottom:0;margin-bottom:0}
+      .machine-list{grid-template-columns:repeat(2,minmax(0,1fr))}.rail-bottom{margin-top:12px}.machine-art{margin-top:12px;padding:18px 16px 14px}.reel{height:95px;font-size:53px}.marquee{font-size:14px}.paytable-grid{grid-template-columns:repeat(2,1fr)}
+      .roulette{padding:12px}.wheel-wrap{width:220px;height:220px}.wheel{width:202px;height:202px}.roulette-options{grid-template-columns:repeat(3,1fr)}.roulette-pick{font-size:8px}
+    }
+    @media(max-width:390px) {
+      .brand-name{font-size:15px}.brand-mark{width:28px;height:28px;font-size:13px}.wallet{gap:4px}.wallet strong{font-size:13px}.level-chip{font-size:7px}
+      .main-head{padding:12px}.main-head h1{font-size:18px}.machine-art{width:calc(100% - 22px);padding:16px 12px 13px}.reels{gap:5px;padding:6px}.reel{height:83px;font-size:46px}.bet-row{gap:4px}.bet-input{width:78px}.spin-controls .btn{min-width:105px;padding:0 7px;font-size:8px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">LL</div><div class="brand-name">LUCKY LANTERN<small>ARCADE CLUB · EST. 1978</small></div></div>
+      <div class="top-rule"></div>
+      <div class="wallet"><span>CLUB CASH</span><strong id="cash">$0</strong></div>
+      <div id="levelChip" class="level-chip">REP 0</div>
+    </header>
+
+    <div class="columns">
+      <aside class="rail">
+        <h2 class="eyebrow"><span>01 / FLOOR</span><span>CLUB ACCESS</span></h2>
+        <div class="nav-tabs"><button id="slotsTab" class="tab active">SLOTS</button><button id="rouletteTab" class="tab">ROULETTE</button></div>
+        <h2 id="machineHeading" class="eyebrow"><span>THE MACHINES</span><span id="machineCount">01 / 04</span></h2>
+        <div id="machineList" class="machine-list"></div>
+        <div class="rail-bottom">
+          <div class="divider"></div>
+          <h2 class="eyebrow"><span>CLUB REPUTATION</span><span id="repNumber">0 REP</span></h2>
+          <div class="progress-head"><span id="nextLevelLabel">NEXT ACCESS</span><b id="nextLevel">LEVEL 2</b></div>
+          <div class="progress"><i id="repBar" style="width:0%"></i></div>
+          <div id="repHint" class="rep-next">Spin to build your name.</div>
+        </div>
+      </aside>
+
+      <section class="main-panel">
+        <div class="main-head"><div><h1 id="gameTitle">Lucky Lantern</h1><p id="gameSubtitle">THE ORIGINAL · FRUIT & CLASSIC SYMBOLS</p></div><div id="machineStatus" class="machine-status">READY TO PLAY</div></div>
+        <div id="slotView">
+          <div id="machineArt" class="machine-art">
+            <div class="marquee">✦ &nbsp; LUCKY LANTERN &nbsp; ✦</div>
+            <div class="reels"><div class="reel" id="reel0">🍒</div><div class="reel" id="reel1">🍋</div><div class="reel" id="reel2">🍊</div></div>
+            <div class="payline"></div>
+            <div id="machineNameplate" class="machine-nameplate">3 REELS · 5 PAYLINES · JACKPOT 500×</div>
+          </div>
+          <div id="slotResult" class="result-line">Choose your stake and give it a spin.</div>
+          <div class="bet-row"><span class="bet-label">BET</span><button id="betDown" class="btn small">−</button><input id="slotBet" class="bet-input" type="number" min="5" step="5" value="25" aria-label="Slot bet"><button id="betUp" class="btn small">+</button><button id="allIn" class="btn red small">ALL IN</button></div>
+          <div class="spin-controls"><button id="spinButton" class="btn gold">SPIN · $25</button><button id="autoButton" class="btn">AUTO ×5</button></div>
+          <div id="unlockPrompt" class="machine-unlock" hidden><span id="unlockText">Unlock this machine</span><button id="unlockButton" class="btn gold">UNLOCK</button></div>
+          <section class="paytable"><h2 id="paytableTitle">PAYTABLE · 3 OF A KIND</h2><div id="paytableGrid" class="paytable-grid"></div></section>
+        </div>
+
+        <div id="rouletteView" class="roulette" hidden>
+          <div class="wheel-wrap"><div class="wheel-pointer"></div><div id="wheel" class="wheel"><div class="wheel-center"><span id="wheelNumber">LL</span></div></div></div>
+          <div id="wheelResult" class="wheel-result">Choose a wager below.</div>
+          <div id="rouletteOptions" class="roulette-options"></div>
+          <div class="roulette-bet-row"><span class="bet-label">BET</span><button id="rouletteBetDown" class="btn small">−</button><input id="rouletteBet" class="bet-input" type="number" min="5" step="5" value="25" aria-label="Roulette bet"><button id="rouletteBetUp" class="btn small">+</button><button id="rouletteAllIn" class="btn red small">ALL IN</button></div>
+          <button id="rouletteSpin" class="btn gold" style="min-width:180px">SPIN THE WHEEL</button>
+          <p class="roulette-note">European wheel · 0–36 · winnings return stake plus payout</p>
+        </div>
+      </section>
+
+      <aside class="club">
+        <h2 class="eyebrow"><span>02 / CLUB LIFE</span><span>YOUR PROGRESS</span></h2>
+        <section class="club-section"><h3 class="club-title"><span>PERMANENT UPGRADES</span><span>OWNED <b id="upgradeCount">0</b>/3</span></h3><div id="upgrades"></div></section>
+        <section class="club-section"><h3 class="club-title"><span>THE MOTOR POOL</span><span>COLLECT</span></h3><div id="assets"></div></section>
+        <section class="club-section"><h3 class="club-title"><span>HOUSE CREDIT</span><span>12% FEE</span></h3><div class="loan-balance"><span>OUTSTANDING</span><strong id="debt">$0</strong></div><div class="loan-actions"><button id="borrowButton" class="btn">BORROW $250</button><button id="repayButton" class="btn">REPAY $100</button></div><p id="loanNote" class="loan-note">Borrow up to $1,000. Each advance adds a 12% fee. Repay any time.</p></section>
+        <div class="rail-bottom"><div class="divider"></div><div class="stat-line"><span>LUCK BONUS</span><b id="luckStat">+0%</b></div><div class="stat-line" style="margin-top:8px"><span>GARAGE VALUE</span><b id="garageValue">$0</b></div></div>
+      </aside>
+    </div>
+    <p class="fineprint">FOR ENTERTAINMENT ONLY · CLUB CASH HAS NO REAL-WORLD VALUE · OUTCOMES ARE RANDOM</p>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script>
+    (() => {
+      "use strict";
+      const $ = (id) => document.getElementById(id);
+      const machines = [
+        { id:"lantern", name:"Lucky Lantern", icon:"🏮", rep:0, subtitle:"THE ORIGINAL · FRUIT & CLASSIC SYMBOLS", betMin:5, betMax:500, jackpot:500, weights:[26,22,18,14,10,7,2.8,.18], symbols:["🍒","🍋","🍊","🍇","🍉","⭐","🔔","💎"], payouts:[1.3,1.7,2.2,3.2,5,9,22,500] },
+        { id:"neon", name:"Neon Nights", icon:"🌙", rep:15, subtitle:"AFTER HOURS · NEON & LUCKY SEVENS", betMin:10, betMax:900, jackpot:800, weights:[24,21,18,15,11,7,3.5,.12], symbols:["🌙","💜","⚡","🎲","🃏","7️⃣","👑","🌟"], payouts:[1.5,1.8,2.4,3.5,5,12,30,800] },
+        { id:"royal", name:"Royal Flush", icon:"♛", rep:50, subtitle:"HIGH ROLLER · GEMS & ROYALTY", betMin:25, betMax:2000, jackpot:1500, weights:[27,22,18,14,10,6,2.8,.08], symbols:["♦️","♣️","♥️","♠️","🪙","💍","👑","💠"], payouts:[1.5,2,2.7,4,7,15,45,1500] },
+        { id:"cosmos", name:"Cosmic 7", icon:"🚀", rep:120, subtitle:"OUTER LIMITS · GALACTIC JACKPOT", betMin:50, betMax:5000, jackpot:3000, weights:[25,22,18,14,10,7,3.8,.035], symbols:["🪐","🌑","☄️","🛸","🌌","👾","🚀","🌠"], payouts:[1.5,2.2,3,5,8,18,60,3000] }
+      ];
+      const upgrades = [
+        { id:"clover", name:"Lucky Clover", icon:"🍀", description:"Better odds on premium symbols. Stacks up to 3 levels.", cost:450, max:3, effects:[3,6,10] },
+        { id:"polish", name:"Polished Reels", icon:"✨", description:"Boost every slot payout by 8% per level.", cost:700, max:3, effects:[8,16,24] },
+        { id:"credit", name:"Credit History", icon:"📜", description:"Lower the house fee on future advances.", cost:900, max:2, effects:[4,8] }
+      ];
+      const assets = [
+        { id:"scooter", name:"Lucky Moped", icon:"🛵", cost:800, description:"A little chrome, a little freedom." },
+        { id:"coupe", name:"Cherry Coupe", icon:"🚗", cost:2400, description:"Cherry red, polished every Sunday." },
+        { id:"roadster", name:"Moonlight Roadster", icon:"🏎️", cost:6000, description:"A velvet-rope kind of arrival." }
+      ];
+      const wheelPicks=[
+        {id:"red",label:"RED",mult:1,color:"red"},{id:"black",label:"BLACK",mult:1,color:"black"},
+        {id:"even",label:"EVEN",mult:1},{id:"odd",label:"ODD",mult:1},
+        {id:"low",label:"1–18",mult:1},{id:"high",label:"19–36",mult:1},
+        {id:"dozen1",label:"1ST 12",mult:2},{id:"dozen2",label:"2ND 12",mult:2},{id:"dozen3",label:"3RD 12",mult:2},
+        {id:"number",label:"STRAIGHT · PICK #",mult:35}
+      ];
+      const redNumbers=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+      const freshSave={cash:700,rep:0,debt:0,unlockedMachines:["lantern"],machine:"lantern",upgrades:{},ownedAssets:[],selectedPick:"red",lastSpin:null};
+      let save;
+      try { save={...freshSave,...JSON.parse(localStorage.getItem("lucky-lantern-save")||"{}")} } catch { save={...freshSave}; }
+      save.upgrades={...freshSave.upgrades,...(save.upgrades||{})};
+      save.unlockedMachines=Array.isArray(save.unlockedMachines)?save.unlockedMachines:["lantern"];
+      save.ownedAssets=Array.isArray(save.ownedAssets)?save.ownedAssets:[];
+      if(!machines.some(m=>m.id===save.machine)||!save.unlockedMachines.includes(save.machine))save.machine="lantern";
+      let activeView="slots",spinning=false,autoRemaining=0,selectedNumber=17,toastTimer=0;
+
+      function persist(){localStorage.setItem("lucky-lantern-save",JSON.stringify(save));}
+      function cash(){return Math.max(0,Math.floor(Number(save.cash)||0));}
+      function machine(){return machines.find(m=>m.id===save.machine)||machines[0];}
+      function upgradeLevel(id){return Math.max(0,Number(save.upgrades[id])||0);}
+      function luckBonus(){return upgradeLevel("clover")?upgrades[0].effects[upgradeLevel("clover")-1]:0;}
+      function payoutBonus(){return upgradeLevel("polish")*8;}
+      function creditFee(){return Math.max(4,12-upgradeLevel("credit")*4);}
+      function maxDebt(){return 1000;}
+      function fmt(value){return "$"+Math.floor(value).toLocaleString("en-US");}
+      function notify(message){const el=$("toast");el.textContent=message;el.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("visible"),2600);}
+      function addRep(amount=1){save.rep+=amount;}
+      function currentBet(input,m){const n=Math.floor(Number(input.value)||0);return Math.max(m.betMin,Math.min(m.betMax,Math.floor(n/5)*5||m.betMin));}
+      function effectiveWeights(m){const w=[...m.weights];const luck=luckBonus()/100;if(luck<=0)return w;for(let i=4;i<w.length;i++)w[i]*=1+luck*(i-2)*.72;return w;}
+      function weightedSymbol(m){const weights=effectiveWeights(m);const total=weights.reduce((a,b)=>a+b,0);let n=Math.random()*total;for(let i=0;i<weights.length;i++){n-=weights[i];if(n<=0)return i;}return 0;}
+      function oddsLabel(weight){return `${(weight*100).toFixed(weight<1?2:0)}% weight`;}
+      function renderMachines(){
+        const list=$("machineList");list.replaceChildren();
+        machines.forEach((m,index)=>{
+          const owned=save.unlockedMachines.includes(m.id),button=document.createElement("button");button.type="button";
+          button.className=`machine-choice${save.machine===m.id&&activeView==="slots"?" active":""}`;button.disabled=!owned;
+          const icon=document.createElement("span");icon.className="machine-icon";icon.textContent=m.icon;
+          const name=document.createElement("strong");name.textContent=m.name;
+          const meta=document.createElement("small");meta.textContent=owned?`BET ${fmt(m.betMin)}–${fmt(m.betMax)}`:`${m.rep} REP TO UNLOCK`;
+          button.append(icon,name,meta);button.addEventListener("click",()=>{if(owned){save.machine=m.id;persist();renderAll();}});list.append(button);
+        });
+        $("machineCount").textContent=`${String(save.unlockedMachines.length).padStart(2,"0")} / ${String(machines.length).padStart(2,"0")}`;
+      }
+      function renderProgress(){
+        const thresholds=machines.map(m=>m.rep);const next=thresholds.find(n=>n>save.rep);
+        $("repNumber").textContent=`${save.rep} REP`;
+        if(next===undefined){$("nextLevel").textContent="MAX ACCESS";$("nextLevelLabel").textContent="ALL FLOORS OPEN";$("repBar").style.width="100%";$("repHint").textContent="The whole club is yours.";return;}
+        const prev=[...thresholds].filter(n=>n<=save.rep).pop()||0;const pct=Math.max(0,Math.min(100,(save.rep-prev)/(next-prev)*100));
+        $("nextLevel").textContent=`${next} REP`;
+        $("nextLevelLabel").textContent=`NEXT: ${machines.find(m=>m.rep===next)?.name||"CLUB ACCESS"}`;
+        $("repBar").style.width=`${pct}%`;
+        $("repHint").textContent=`${next-save.rep} more rep to unlock the next floor.`;
+      }
+      function renderUpgrades(){
+        const wrap=$("upgrades");wrap.replaceChildren();let ownedCount=0;
+        upgrades.forEach(u=>{
+          const level=upgradeLevel(u.id),maxed=level>=u.max,cost=u.cost*(level+1);
+          if(level)ownedCount++;
+          const row=document.createElement("div");row.className="upgrade-row";
+          const icon=document.createElement("div");icon.className="upgrade-icon";icon.textContent=u.icon;
+          const info=document.createElement("div");info.className="upgrade-info";
+          const title=document.createElement("strong");title.textContent=`${u.name}${level?` · ${level}/${u.max}`:""}`;
+          const desc=document.createElement("small");desc.textContent=maxed?"MAX LEVEL · THANK YOU FOR YOUR BUSINESS":u.description;
+          const buy=document.createElement("button");buy.className="btn";buy.textContent=maxed?"MAX":fmt(cost);buy.disabled=maxed||cash()<cost||spinning;
+          buy.addEventListener("click",()=>{if(maxed||cash()<cost)return;save.cash-=cost;save.upgrades[u.id]=level+1;persist();renderAll();notify(`${u.name} upgraded to level ${level+1}.`);});
+          info.append(title,desc);row.append(icon,info,buy);wrap.append(row);
+        });
+        $("upgradeCount").textContent=ownedCount;
+      }
+      function renderAssets(){
+        const wrap=$("assets");wrap.replaceChildren();
+        assets.forEach(a=>{
+          const owned=save.ownedAssets.includes(a.id),row=document.createElement("div");row.className="asset-row";
+          const icon=document.createElement("div");icon.className="asset-icon";icon.textContent=a.icon;
+          const info=document.createElement("div");info.className="asset-info";
+          const title=document.createElement("strong");title.textContent=a.name;
+          const desc=document.createElement("small");desc.textContent=owned?"IN YOUR MOTOR POOL":a.description;
+          const buy=document.createElement("button");buy.className="btn";buy.textContent=owned?"OWNED":fmt(a.cost);buy.disabled=owned||cash()<a.cost||spinning;
+          buy.addEventListener("click",()=>{if(owned||cash()<a.cost)return;save.cash-=a.cost;save.ownedAssets.push(a.id);persist();renderAll();notify(`${a.name} added to your motor pool.`);});
+          info.append(title,desc);row.append(icon,info,buy);wrap.append(row);
+        });
+      }
+      function renderClub(){
+        $("cash").textContent=fmt(cash());$("levelChip").textContent=`REP ${save.rep}`;
+        $("debt").textContent=fmt(save.debt);$("luckStat").textContent=`+${luckBonus()}%`;
+        $("garageValue").textContent=fmt(assets.filter(a=>save.ownedAssets.includes(a.id)).reduce((sum,a)=>sum+a.cost,0));
+        $("borrowButton").disabled=save.debt>=maxDebt()||spinning;
+        $("borrowButton").textContent=save.debt>=maxDebt()?"CREDIT MAXED":"BORROW $250";
+        $("repayButton").disabled=save.debt<=0||cash()<=0||spinning;
+        $("loanNote").textContent=`Borrow up to ${fmt(maxDebt())}. Each advance adds a ${creditFee()}% fee. Repay any time.`;
+        renderProgress();renderUpgrades();renderAssets();
+      }
+      function renderPaytable(){
+        const m=machine();$("paytableTitle").textContent=`PAYTABLE · MATCH 3 · JACKPOT ${m.jackpot}×`;
+        const grid=$("paytableGrid");grid.replaceChildren();
+        m.symbols.forEach((symbol,index)=>{
+          const row=document.createElement("div");row.className="pay-item";
+          const left=document.createElement("span");left.textContent=`${symbol} ×3`;
+          const right=document.createElement("strong");right.textContent=index===m.symbols.length-1?`${m.jackpot}×`: `${m.payouts[index]}×`;
+          row.append(left,right);grid.append(row);
+        });
+      }
+      function renderSlot(){
+        const m=machine(),unlocked=save.unlockedMachines.includes(m.id);
+        $("gameTitle").textContent=m.name;$("gameSubtitle").textContent=m.subtitle;
+        $("machineStatus").textContent=unlocked?`MIN ${fmt(m.betMin)} · MAX ${fmt(m.betMax)}`:`REQUIRES ${m.rep} REP`;
+        $("machineNameplate").textContent=`3 REELS · MATCH 3 · JACKPOT ${m.jackpot}×`;
+        $("machineArt").querySelector(".marquee").textContent=`✦   ${m.name.toUpperCase()}   ✦`;
+        const bet=$("slotBet");bet.min=m.betMin;bet.max=m.betMax;bet.step=5;
+        if(Number(bet.value)<m.betMin||Number(bet.value)>m.betMax)bet.value=m.betMin;
+        $("unlockPrompt").hidden=unlocked;
+        if(!unlocked){$("unlockText").textContent=`Club reputation ${m.rep} unlocks this machine.`;$("unlockButton").textContent=`UNLOCK AT ${m.rep} REP`;$("unlockButton").disabled=save.rep<m.rep;}
+        const result=save.lastSpin?.machine===m.id?save.lastSpin.text:"Choose your stake and give it a spin.";
+        $("slotResult").textContent=result;$("slotResult").className=`result-line${save.lastSpin?.machine===m.id?(save.lastSpin.win?" win":" lose"):""}`;
+        $("spinButton").textContent=`SPIN · ${fmt(currentBet(bet,m))}`;
+        $("spinButton").disabled=spinning||!unlocked||cash()<m.betMin;
+        $("allIn").disabled=spinning||!unlocked||cash()<m.betMin;
+        $("autoButton").disabled=spinning||!unlocked||cash()<m.betMin;
+        renderPaytable();renderMachines();
+      }
+      function renderRoulette(){
+        const wrap=$("rouletteOptions");wrap.replaceChildren();
+        wheelPicks.forEach(p=>{
+          const b=document.createElement("button");b.className=`roulette-pick ${p.color||""}${save.selectedPick===p.id?" selected":""}`;b.textContent=p.id==="number"?`# ${selectedNumber}`:p.label;
+          b.addEventListener("click",()=>{
+            if(p.id==="number"){selectedNumber=(selectedNumber+1)%37;save.selectedPick="number";}
+            else save.selectedPick=p.id;
+            persist();renderRoulette();
+          });
+          b.addEventListener("contextmenu",event=>{if(p.id==="number"){event.preventDefault();selectedNumber=(selectedNumber+36)%37;renderRoulette();}});
+          wrap.append(b);
+        });
+        $("rouletteSpin").disabled=spinning||cash()<5;
+        $("rouletteAllIn").disabled=spinning||cash()<5;
+      }
+      function renderAll(){renderClub();renderSlot();renderRoulette();persist();}
+
+      function setView(view){
+        if(spinning)return;activeView=view;
+        $("slotView").hidden=view!=="slots";$("rouletteView").hidden=view!=="roulette";
+        $("slotsTab").classList.toggle("active",view==="slots");$("rouletteTab").classList.toggle("active",view==="roulette");
+        $("machineHeading").hidden=view!=="slots";$("machineList").hidden=view!=="slots";
+        if(view==="roulette"){$("gameTitle").textContent="Roulette";$("gameSubtitle").textContent="EUROPEAN WHEEL · SINGLE ZERO · CLUB CASH";$("machineStatus").textContent="HOUSE EDGE 2.70%";}
+        else renderSlot();
+      }
+
+      function spinSlots(forceAllIn=false,auto=false){
+        const m=machine();if(spinning||!save.unlockedMachines.includes(m.id))return;
+        let bet=forceAllIn?Math.min(cash(),m.betMax):currentBet($("slotBet"),m);
+        bet=Math.max(m.betMin,Math.min(m.betMax,bet));
+        if(cash()<bet){notify("Not enough club cash for that wager.");return;}
+        save.cash-=bet;addRep(1);spinning=true;persist();renderAll();
+        $("slotBet").value=bet;$("spinButton").disabled=true;$("autoButton").disabled=true;$("allIn").disabled=true;
+        $("machineStatus").textContent="REELS IN MOTION…";$("slotResult").textContent="Good luck. The reels are turning.";$("slotResult").className="result-line";
+        const reels=[0,1,2].map(i=>$("reel"+i));reels.forEach((r,i)=>{r.classList.add("spinning");let count=0;const timer=setInterval(()=>{r.textContent=m.symbols[Math.floor(Math.random()*m.symbols.length)];count++;if(count>14+i*7)clearInterval(timer);},55);});
+        const final=[weightedSymbol(m),weightedSymbol(m),weightedSymbol(m)];
+        const win=final[0]===final[1]&&final[1]===final[2];
+        let multiplier=win?m.payouts[final[0]]:nearMiss(final,m)?0:0;
+        if(final.every(i=>i===m.symbols.length-1)&&!win)multiplier=0;
+        const bonus=upgradeLevel("polish")*0.08;
+        const payout=win?Math.floor(bet*multiplier*(1+bonus)):0;
+        setTimeout(()=>{
+          reels.forEach((r,i)=>{r.classList.remove("spinning");r.textContent=m.symbols[final[i]];});
+          if(payout>0){save.cash+=payout;$("machineArt").classList.remove("win-flash");void $("machineArt").offsetWidth;$("machineArt").classList.add("win-flash");$("slotResult").textContent=multiplier>=m.jackpot?`JACKPOT! ${fmt(payout)} returned!`:`Winner! ${m.symbols[final[0]]} pays ${fmt(payout)}.`;$("slotResult").className="result-line win";}
+          else {$("machineArt").classList.remove("lose-shake");void $("machineArt").offsetWidth;$("machineArt").classList.add("lose-shake");$("slotResult").textContent=nearMiss(final,m)?"So close. One symbol away.":"No match this time. Try another line.";$("slotResult").className="result-line lose";}
+          $("machineStatus").textContent=payout>0?`PAID ${fmt(payout)}`:`WAGER ${fmt(bet)} · NO WIN`;
+          save.lastSpin={machine:m.id,text:$("slotResult").textContent,win:payout>0};spinning=false;persist();renderAll();
+          if(auto){autoRemaining--;if(autoRemaining>0&&cash()>=m.betMin)spinSlots(false,true);else {autoRemaining=0;$("autoButton").textContent="AUTO ×5";}}
+        },1450);
+      }
+      function nearMiss(out,m){return out.filter(i=>i===m.symbols.length-1).length===2;}
+
+      function spinRoulette(allIn=false){
+        if(spinning)return;const bet=allIn?cash():Math.max(5,Math.floor(Number($("rouletteBet").value)||5));
+        if(bet<5||cash()<bet){notify("Not enough club cash for that wager.");return;}
+        save.cash-=bet;addRep(1);spinning=true;persist();renderAll();
+        $("rouletteSpin").disabled=true;$("wheelResult").textContent="The ball is in motion…";
+        const result=Math.floor(Math.random()*37);const wheel=$("wheel");
+        const turns=1440+Math.random()*720+(360-result*360/37);
+        wheel.style.transform=`rotate(${turns}deg)`;
+        setTimeout(()=>{
+          const pick=wheelPicks.find(p=>p.id===save.selectedPick);let won=false;
+          if(pick.id==="red")won=result!==0&&redNumbers.has(result);
+          else if(pick.id==="black")won=result!==0&&!redNumbers.has(result);
+          else if(pick.id==="even")won=result!==0&&result%2===0;
+          else if(pick.id==="odd")won=result%2===1;
+          else if(pick.id==="low")won=result>=1&&result<=18;
+          else if(pick.id==="high")won=result>=19&&result<=36;
+          else if(pick.id==="dozen1")won=result>=1&&result<=12;
+          else if(pick.id==="dozen2")won=result>=13&&result<=24;
+          else if(pick.id==="dozen3")won=result>=25&&result<=36;
+          else if(pick.id==="number")won=result===selectedNumber;
+          const payout=won?bet*(pick.mult+1):0;if(payout)save.cash+=payout;
+          const color=result===0?"GREEN":redNumbers.has(result)?"RED":"BLACK";
+          $("wheelNumber").textContent=String(result);$("wheelResult").textContent=won?`${result} ${color} · YOU WIN ${fmt(payout)}`:`${result} ${color} · ${pick.label} MISSED`;
+          $("wheelResult").style.color=won?"var(--gold)":"var(--muted)";
+          spinning=false;persist();renderAll();
+        },3200);
+      }
+
+      function borrow(){
+        const amount=Math.min(250,maxDebt()-save.debt);if(amount<=0){notify("Your credit line is maxed out.");return;}
+        const fee=Math.ceil(amount*creditFee()/100);save.cash+=amount;save.debt+=amount+fee;persist();renderAll();notify(`Borrowed ${fmt(amount)}. ${fmt(fee)} fee added to your balance.`);
+      }
+      function repay(){
+        const amount=Math.min(100,save.debt,cash());if(amount<=0)return;save.cash-=amount;save.debt-=amount;persist();renderAll();notify(`${fmt(amount)} paid toward house credit.`);
+      }
+
+      function bind(){
+        $("slotsTab").addEventListener("click",()=>setView("slots"));$("rouletteTab").addEventListener("click",()=>setView("roulette"));
+        $("spinButton").addEventListener("click",()=>spinSlots());$("allIn").addEventListener("click",()=>spinSlots(true));
+        $("autoButton").addEventListener("click",()=>{if(spinning)return;autoRemaining=5;$("autoButton").textContent="STOP AUTO";spinSlots(false,true);});
+        $("autoButton").addEventListener("contextmenu",e=>{e.preventDefault();autoRemaining=0;$("autoButton").textContent="AUTO ×5";});
+        $("slotBet").addEventListener("input",()=>{$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),machine()))}`;});
+        $("betDown").addEventListener("click",()=>{const m=machine();$("slotBet").value=Math.max(m.betMin,currentBet($("slotBet"),m)-5);$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),m))}`;});
+        $("betUp").addEventListener("click",()=>{const m=machine();$("slotBet").value=Math.min(m.betMax,currentBet($("slotBet"),m)+5);$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),m))}`;});
+        $("allIn").addEventListener("contextmenu",e=>{e.preventDefault();$("slotBet").value=Math.min(cash(),machine().betMax);$("spinButton").textContent=`SPIN · ${fmt(currentBet($("slotBet"),machine()))}`;});
+        $("unlockButton").addEventListener("click",()=>{const m=machine();if(save.rep<m.rep)return;save.unlockedMachines.push(m.id);persist();renderAll();notify(`${m.name} is now open.`);});
+        $("borrowButton").addEventListener("click",borrow);$("repayButton").addEventListener("click",repay);
+        $("rouletteSpin").addEventListener("click",()=>spinRoulette(false));$("rouletteAllIn").addEventListener("click",()=>spinRoulette(true));
+        $("rouletteBetDown").addEventListener("click",()=>$("rouletteBet").value=Math.max(5,(Math.floor(Number($("rouletteBet").value)||5)-5)));
+        $("rouletteBetUp").addEventListener("click",()=>$("rouletteBet").value=Math.floor(Number($("rouletteBet").value)||5)+5);
+      }
+      bind();renderAll();
+    })();
+  </script>
+</body>
+</html>
