@@ -131,3 +131,12 @@ h1,h2,h3,.hero h2{font-family:'Cinzel Decorative',serif!important;letter-spacing
 .g10,.g11{--c1:#111c3c;--c2:#070b18}
 .mg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:340px;margin:12px auto}.mt{aspect-ratio:1;font-size:28px;padding:0;background:linear-gradient(145deg,#1b2a5a,#0b1230);border:1px solid #d4af3788;border-radius:12px}.mt.gm2{background:radial-gradient(#2dd4bf99,#064e3b);animation:pop .4s}.mt.bm{background:radial-gradient(#ef4444,#450a0a);animation:sh .4s}
 .pl>div{background:linear-gradient(#0006,#0003)!important;border:1px solid #d4af3744;border-radius:16px!important}
+body{background:radial-gradient(90% 60% at 50% -10%,#5b1a45bb,transparent),radial-gradient(60% 50% at 50% 115%,#d4af3724,transparent),#14040f!important}
+body:before{background:none!important}header{background:#14040fee!important}
+main{background:linear-gradient(160deg,#ffffff10,#0000),#1d0818dd!important;border-color:#d4af3733!important}
+.tile{background:linear-gradient(160deg,#3d1131,#16050f)!important}.orn:after{background:#1d0818}
+.felt{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"),radial-gradient(ellipse at 50% 25%,#63194a,#1e0619 80%)!important;border:9px solid #2a0d1f!important}
+.cab{background:linear-gradient(#45123a,#14040f)!important}.wb{background:linear-gradient(145deg,#3a1030,#14040f)!important}
+.trk{border:0!important;background:repeating-linear-gradient(90deg,#d62839 0 22px,#fff 22px 44px) top/100% 8px no-repeat,repeating-linear-gradient(90deg,#fff 0 22px,#d62839 22px 44px) bottom/100% 8px no-repeat,#15151b!important;padding:8px 0;border-radius:10px;box-shadow:0 12px 40px #000a}
+.ln{height:50px!important;background:linear-gradient(90deg,transparent 42%,#22c55e22 42% 66%,transparent 66%),repeating-linear-gradient(90deg,#2b2b34 0 80px,#25252d 80px 160px)!important;border-bottom:2px dashed #ffffff44!important}
+.ln:before{content:'';position:absolute;left:38px;top:0;bottom:0;width:3px;background:#fffa}.hs{font-size:34px!important;filter:drop-shadow(0 4px 3px #000)}.hs.go{filter:drop-shadow(-16px 0 5px #ff8a1ecc) drop-shadow(0 4px 3px #000)}
